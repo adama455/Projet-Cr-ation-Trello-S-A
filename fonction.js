@@ -47,8 +47,7 @@ function creerModalConfirm(message,elemClos) {
     const btnConfirm=document.createElement('button');
     const btnCancel=document.createElement('button');
     containerModalConfirm.className='container-modal-confirm'
-    modalConfirm.className='modal-confirm';
-    modalConfirm.style.backgroundColor='#'+Math.floor(Math.random()*16777215).toString(16);
+    modalConfirm.className='modal-confrm';
     divBtnConfirm.className='div-btnconfirm'
     p.innerText=message
     btnCancel.innerText='Cancel';
@@ -72,65 +71,74 @@ function creerModalConfirm(message,elemClos) {
 }
 
 
-function creationCarte() {
+function creationCarte(textarea,input1,input2,input3) { 
+    // Verification des champs vides:  
+    if (textarea=="" || input1=="" || input2 =="" || input3==""){
+        // containerModalNotes.appendChild(errorMsg('Les champs ne doit pas etre vide!'))
+        e.preventDefault();
+    }     
+    
     let nbrCarte=1;
-    const carte= document.createElement('div');
-    carte.id='carte'+nbrCarte;
-    carte.className='carte';
-    const textareaCarte= document.createElement('textarea');
-    textareaCarte.className='textarea-carte'
-    const iconRowG=document.createElement('i');
-    const iconRowD=document.createElement('i');
-    iconRowG.className="bx bxs-left-arrow icon-deplacement";
-    iconRowD.className="bx bxs-right-arrow icon-deplacement";
-    textareaCarte.rows='3'
-    // creation des div de recuperation des dates:
-    const divDetail=document.createElement('div');
-    const divDate= document.createElement('div');
-    const divHDebut= document.createElement('div');
-    const divHFin= document.createElement('div');
-    // Creation des icones Edit et Supprimer des taches
-    const divIconEditSupp= document.createElement('div');
-    const iconSupp= document.createElement('i');
-    const iconEdit= document.createElement('i');
-    divIconEditSupp.className='edit-supp';
-    iconEdit.className="edit bx bx-pencil";
-    iconSupp.className="supp bx bx-trash"
-    divIconEditSupp.append(iconEdit,iconSupp);
-    divDetail.className='div-detail';
-    divDate.className='date';
-    divHDebut.className='date';
-    divHFin.className='date';
-    divDetail.append(divDate,divHDebut,divHFin);
-    //Appel de la fonction showDetail
-    carte.addEventListener('mousemove',()=>{
-        divDetail.classList.toggle('show-detail');
-    })
-    // Deplacement taches
-    DeplacementTaches(iconRowD,iconRowG)
-    carte.append(iconRowG,iconRowD,textareaCarte,divDetail,divIconEditSupp);
-    /* ************************************************ 
-        ******Recuperation des input du Modal******
-    *****************************************************/
-        const valtextarea=document.getElementById('val-note');
-        const date=document.getElementById('val-date');
-        const hDebut=document.getElementById('val-hDebut');
-        const hFin=document.getElementById('val-hFin');
-        textareaCarte.innerText=valtextarea.value;
-        divDate.innerText='Date: '+date.value;
-        divHDebut.innerText='Heure-debut: '+hDebut.value;
-        divHFin.innerText= 'Heure-Fin: '+hFin.value;
+        const carte= document.createElement('div');
+        carte.id='carte'+nbrCarte;
+        carte.className='carte animate__animated animate__rollIn';
+        const textareaCarte= document.createElement('textarea');
+        textareaCarte.className='textarea-carte'
+        const iconRowG=document.createElement('i');
+        const iconRowD=document.createElement('i');
+        iconRowG.className="bx bxs-left-arrow icon-deplacement";
+        iconRowD.className="bx bxs-right-arrow icon-deplacement";
+        textareaCarte.rows='3'
+        // creation des div de recuperation des dates:
+        const divDetail=document.createElement('div');
+        const divDate= document.createElement('div');
+        const divHDebut= document.createElement('div');
+        const divHFin= document.createElement('div');
+        // Creation des icones Edit et Supprimer des taches
+        const divIconEditSupp= document.createElement('div');
+        const iconSupp= document.createElement('i');
+        const iconEdit= document.createElement('i');
+        divIconEditSupp.className='edit-supp';
+        iconEdit.className="edit bx bx-pencil";
+        iconSupp.className="supp bx bx-trash"
+        divIconEditSupp.append(iconEdit,iconSupp);
+        divDetail.className="div-detail animate__animated animate__flipInX";
+        divDate.className='date';
+        divHDebut.className='date';
+        divHFin.className='date';
+        divDetail.append(divDate,divHDebut,divHFin);
+        //Appel de la fonction showDetail
+        carte.addEventListener('mouseover',()=>{
+            divDetail.classList.toggle('show-detail');
+        })
+        // Insertion des valeur de l'input;
+        textareaCarte.innerText=textarea;
+        divDate.innerText='Date: '+input1;
+        divHDebut.innerText='Heure-debut: '+input2;
+        divHFin.innerText= 'Heure-Fin: '+input3;
+        // Deplacement taches
+        DeplacementTaches(iconRowD,iconRowG)
+        carte.append(iconRowG,iconRowD,textareaCarte,divDetail,divIconEditSupp);
         DeplacerVersCorbeil(iconSupp,carte);
-    nbrCarte++;
-    return carte;
+            
+        nbrCarte++;
+        return carte;
 }
-/* function showDivDetail(div) {
-    // const carte=document.querySelector('.carte')
-    div.addEventListener('mousemove',()=>{
-        div.classList.toggle('show-detail');
-    })
-} */
 
+/* ************FONCTION MESSAGE D'ERREUR********** */
+
+
+
+
+
+function errorMsg(input,small,message){
+    if (input.value) {
+        small.classList.add('show-message-error');
+        small.innerText=message; 
+    }   
+};
+
+/* *************************************************** */
 function DeplacerVersCorbeil(icon,elemt) {
     icon.addEventListener('click',(e)=>{
         const iconRow=document.querySelector('.icon-deplacement');
@@ -155,7 +163,6 @@ function corbeill() {
     partieCorbeille.appendChild(listeCorbeille);
     return partieCorbeille;
 }
-
 
 /****************************************************/
         /* Déplacement des carte(Taches*/
@@ -186,25 +193,8 @@ function AlertConfirm(elemtPrt,elemtFils) {
 }
 // ********************************************
 
-function checkValue(errorMsg) {
-const input=document.querySelectorAll('.input')
-    input.forEach(element => {
-        if (element.value == " ") {
-            var message=document.createElement('span').innerText=errorMsg;
-        }   
-        return message;
-    });   
-}
 
-   
-
-
-
-
-
-
-
-
+// boutonAdd.addEventListener('submit',(e)=>{
 /* function Deplacer(bouton){
     bouton.addEventListener('click',(e)=>{
         const modal=e.target.parentElement.parentElement.parentElement;

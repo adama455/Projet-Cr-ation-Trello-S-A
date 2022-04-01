@@ -71,49 +71,29 @@ barreHaute.className='barre-haute';
             const deleteModal=document.createElement('i');
             deleteModal.className="fa-solid fa-circle-minus delete";
             modal.appendChild(deleteModal);
-            modal.addEventListener('dblclick',()=>{
+            deleteModal.addEventListener('dblclick',()=>{
                 deleteModal.classList.toggle('delett-colonne');
                 deleteModal.addEventListener('click',function(e){
-                    // console.log(e.target.parentElement!==containerModal.children[0]);
-                    // console.log(containerModal.children.length===1);
-                    // on ne peut supprimer la premiere que si elle est seule:
                     if (e.target.parentElement !=containerModal.children[0] ||containerModal.children.length===1){
+                        /* Appel de la fonction Confirme Suppression */
+                        // body.appendChildcreerModalConfirm("Voulez vous vraiment supprimer la colonne!",e.target.parentElement);
                         confirm('Etes vous sûr de supprimer la colonne!');
                         e.target.parentElement.remove();
-                        //Décrementation lorsqu'on supprime une colonne
                         nbreCols--;
                     }
                 reflesh();    
                 })
                 reflesh();    
             })
-            // *************************************************************
-            // *************************************************************
-            
             // getRandomColor()
             modal.style.backgroundColor='#'+Math.floor(Math.random()*16777215).toString(16);
                 //Incrementation lorsqu'on supprime une colonne
             nbreCols++;
             
-        } else{
-            alert('Vous avez atteint la limite de Colonne!')
-        }
-
-        })
-        // ***********************************************************
-
-/******************************************************
-    Fonction reflesh apres suppression de colonnes
-****************************************************** */
-    function reflesh() {
-        const ListinputTitreModal=document.querySelectorAll('.input-titre-modal');
-        ListinputTitreModal.forEach((titreModal,i)=>{
-            titreModal.value='Colonne'+(i+1);
-            titreModal.parentElement.parentElement.id=i+1; 
-            // console.log(titreModal.parentElement.id);
-          })
+    } else{
+        alert('Vous avez atteint la limite de Colonne!')
     }
-
+})
 /**********************************************************************************
 #################### CREATION DU MODAL NOTE L'ORSQU'ON CLICK SUR NOTE################
 ********************************************************************************* */
@@ -139,14 +119,18 @@ notes.addEventListener('click',function () {
                 <div class="form modal">
                     <h3>Remplir les informations de la nouvelle taches:</h3>
                     <label for="">Tâches</label>
-                    <textarea name="valnote" id="val-note" value="" cols="30" rows="10" value=""></textarea>
+                    <textarea name="valnote" id="val-note" class="input" value="" cols="30" rows="10" value=""></textarea>
+                    <small class="chp-textarea" >error</small>  
                     <label for="">Date</label>
-                    <input type="date" name="" value="" id="val-date">
+                    <input type="date" name="" class="input" value="" id="val-date">
+                    <small class="chp-date" >error</small> 
                     <label for="">Heure de Début</label>
-                    <input type="time" name="" value="" id="val-hDebut">
+                    <input type="time" name="" class="input" value="" id="val-hDebut">
+                    <small class="chp-hDebut" >error</small>  
                     <label for="">Heure de Fin</label>
-                    <input type="time" name="" value="" id="val-hFin">
-                    <button class="btn">Ajout</button>
+                    <input type="time" name="" class="input" value="" id="val-hFin">
+                    <small class="chp-hFin" >error</small>
+                    <button class="btn" type="submit">Ajout</button>
                     </div> 
             </div>
         
@@ -157,127 +141,40 @@ notes.addEventListener('click',function () {
 
     // Quitter le modal Notes lorsqu'on click sur Icon Close
     const iconClose=document.querySelector('.fa-rectangle-xmark');
-    const modalNotes=document.querySelector('.modal-note')
-    
     iconClose.addEventListener('click',function(){
-        var res = confirm("Êtes-vous sûr de vouloir supprimer?");
-            if(res){
-                containerModalNotes.classList.add('clos-modal-notes');
-            }
-         })
-
-         
-         /* ########Ajouter du text lorsqu'on click sur 
-         le boutton ajouter du formulaire ####### */
-         let nbrCarte=1;
-         const boutonAdd=document.querySelector('.btn');
-         // checkValue(valNote);
-         boutonAdd.addEventListener('click',function(e){
-            // e.preventDefault();
-        const contenuModal=document.querySelector('.contenu-modal');
-        const carte= document.createElement('div');
-        carte.id='carte'+nbrCarte;
-        carte.className='carte';
-        const textareaCarte= document.createElement('textarea');
-        textareaCarte.className='textarea-carte'
-        const iconRowG=document.createElement('i');
-        const iconRowD=document.createElement('i');
-        iconRowG.className="bx bxs-left-arrow icon-deplacement";
-        iconRowD.className="bx bxs-right-arrow icon-deplacement";
-        textareaCarte.rows='3'
-        
-        // creation des div de recuperation des dates:
-        const divDetail=document.createElement('div');
-        const divDate= document.createElement('div');
-        const divHDebut= document.createElement('div');
-        const divHFin= document.createElement('div');
-        // Creation des icones Edit et Supprimer des taches
-        const divIconEditSupp= document.createElement('div');
-        const iconSupp= document.createElement('i');
-        const iconEdit= document.createElement('i');
-        divIconEditSupp.className='edit-supp';
-        iconEdit.className="edit bx bx-pencil";
-        iconSupp.className="supp bx bx-trash"
-        divIconEditSupp.append(iconEdit,iconSupp);
-        divDetail.className='div-detail';
-        divDate.className='date';
-        divHDebut.className='date';
-        divHFin.className='date';
-        divDetail.append(divDate,divHDebut,divHFin);
-        iconSupp.addEventListener('click',(e)=>{
-            carte=e.target.parentElement.parentElement;
-            listeCorbeille.appendChild(carte);
-        })
-    
-        carte.append(iconRowG,iconRowD,textareaCarte,divDetail,divIconEditSupp);
-
-        //  Enregistrer la note puis fermer le modal.
-        confirm('Voulez vous Enregistrer la note');
-        containerModalNotes.className='clos-modal-notes';
-        nbrCarte++
-        /*  */
-        // Recuperation des input du Modal
-        /*  */
-        const valtextarea=document.getElementById('val-note');
-        const valDate=document.getElementById('val-date');
-        const valHD=document.getElementById('val-hDebut');
-        const valHF=document.getElementById('val-hFin');
-        contenuModal.appendChild(carte);
-        textareaCarte.innerText=valtextarea.value;
-        divDate.innerText=valDate.value;
-        divHDebut.innerText=valHD.value;
-        divHFin.innerText=valHF.value;
-
-
-             /**************************************** */
-                    /* Déplacement des carte(Taches*/
-        /****************************************************/
-        iconRowD.addEventListener('click',(e)=>{
-            // const contenuModal=document.getElementsByClassName('.contenu-modal')
-            const carte=document.querySelector('.carte')
-            const modal=e.target.parentElement.parentElement.parentElement;
-            const idEntier=parseInt(modal.id)
-            const colSuivant=document.getElementById(idEntier+1);
-            colSuivant.children[1].appendChild(e.target.parentElement);
-            // console.log(colSuivant.children[1]);
-         })
-        iconRowG.addEventListener('click',(e)=>{
-            const modal=e.target.parentElement.parentElement.parentElement;
-            const idEntier=parseInt(modal.id)
-            const colPrecedent=document.getElementById(idEntier-1);
-            colPrecedent.children[1].appendChild(carte);
-        })
-
+        /* Apelle de la fonction Confirmation */
+        body.appendChild(creerModalConfirm("Voulez vous vraiment quitter le modalNote!",containerModalNotes));    
     })
-})
+    /* ########Ajouter du text lorsqu'on click sur 
+        le boutton ajouter du formulaire ####### */
 
+    const boutonAdd=document.querySelector('.btn');
+    boutonAdd.addEventListener('click',function(e){
+    /******Recuperation des input du Modal******/
+        var valtextarea=document.getElementById('val-note').value;
+        var date=document.getElementById('val-date').value;
+        var hDebut=document.getElementById('val-hDebut').value;
+        var hFin=document.getElementById('val-hFin').value;
+        var hD=Date.parse(`${date} ${hDebut}`)
+        var hF=Date.parse(`${date} ${hFin}`)
+        var now=Date.parse(new Date())
+        if (hF<hD || hD < now) {
+            e.preventDefault
+        }else{
+            const contenuModal=document.querySelector('.contenu-modal');
+            contenuModal.appendChild(creationCarte(valtextarea,date,hDebut,hFin));
+        }
+        // console.log(hD,hF,now);
+    })
+    
+})
 /* *************************************** */
             /* Partie Liste Corbeille */
 /* *************************************** */
-        const partieCorbeille=document.createElement('div');
-        partieCorbeille.className='partie-corbeille'
-        const listeCorbeille=document.createElement('div');
-        listeCorbeille.className='liste-corbeille'
-        partieCorbeille.appendChild(listeCorbeille);
+    const partieCorbeille=document.createElement('div');
+    partieCorbeille.className='partie-corbeille'
+    const listeCorbeille=document.createElement('div');
+    listeCorbeille.className='liste-corbeille'
+    partieCorbeille.appendChild(listeCorbeille);
 
-        body.append(barreHaute,containerModal,icon,containerModalNotes,partieCorbeille);
-
-
-       
-    
-    /* 
-    ********************************************************************
-    ###################### LES Foctions ############################# 
-    *******************************************************************
-    */
-    function checkValue(input) {
-    //    var valInput=input.value
-        if (input.value == "") {
-            var message='Le champs ne doit pas etre vide !'
-        }   
-        return message;
-    }
-   
-    
-  
-    
+body.append(barreHaute,containerModal,icon,containerModalNotes,partieCorbeille);
