@@ -26,9 +26,9 @@ barreHaute.className='barre-haute';
         corbeille.className="fa-solid fa-trash-can corbeille";
         const presCorbeille=document.createElement('i');
         presCorbeille.className="bx bx-left-arrow-alt pres-corbeille"
-        // const partieCorbeille= document.querySelector('.partie-corbeille')
         corbeille.addEventListener('click',()=>{
-            partieCorbeille.classList.toggle('cacher-partie-corbeille');
+            const partieCorbeille = document.querySelector('.partie-corbeille');
+            partieCorbeille.classList.toggle('show-partie-corbeille');
         })
     /* ******************************************************
     ################## Partie Auto-SAve ##########################
@@ -40,7 +40,23 @@ barreHaute.className='barre-haute';
         spanSave.innerText='AutoSave';
         AutoSave.append(iconeSave,spanSave);
         iconeSave.className='bx bx-download icon-autosave';
-    barreHaute.append(AutoSave,colonneNotes,presCorbeille,corbeille,);
+        /* *************************************************
+        ######Mise en place de la Liste des taches:######
+        ************************************************ */
+        const liste=document.createElement('div');
+        liste.className="liste"
+        const span=document.createElement('span')
+        span.innerText='Liste'
+        const iconeListe=document.createElement('i');
+        iconeListe.className="bx bxs-file-import icon-liste";
+        liste.append(iconeListe,span);
+        liste.addEventListener('click',()=>{
+            const ListeTache=document.querySelector('.listes-taches');
+            ListeTache.classList.toggle("show-listes-taches");
+        })
+
+
+    barreHaute.append(AutoSave,liste,colonneNotes,presCorbeille,corbeille,);
     
     const containerModal=document.querySelector('.modal-container');
   let nbreCols=1;
@@ -121,16 +137,16 @@ notes.addEventListener('click',function () {
                     <h3>Remplir les informations de la nouvelle taches:</h3>
                     <label for="">Tâches</label>
                     <textarea name="valnote" id="val-note" class="input" value="" cols="30" rows="10" value=""></textarea>
-                    <small class="chp-textarea" >error</small>  
+                    <small class="chp-textarea" >Le champs est vide</small>  
                     <label for="">Date</label>
                     <input type="date" name="" class="input" value="" id="val-date">
-                    <small class="chp-date" >error</small> 
+                    <small id="chp-date" >date invalide</small> 
                     <label for="">Heure de Début</label>
                     <input type="time" name="" class="input" value="" id="val-hDebut">
-                    <small class="chp-hDebut" >error</small>  
+                    <small id="chp-hDebut" >heure de Debut invalide</small>  
                     <label for="">Heure de Fin</label>
                     <input type="time" name="" class="input" value="" id="val-hFin">
-                    <small class="chp-hFin" >error</small>
+                    <small id="chp-hFin" >heure de Fin invalide</small>
                     <button class="btn" type="submit">Ajout</button>
                     </div> 
             </div>
@@ -156,10 +172,22 @@ notes.addEventListener('click',function () {
         var date=document.getElementById('val-date').value;
         var hDebut=document.getElementById('val-hDebut').value;
         var hFin=document.getElementById('val-hFin').value;
-        console.log(valtextarea,date,hDebut,hFin);
+        const span1=document.querySelector('.chp-textarea');
+        const span2=document.getElementById('.chp-date');
+        const span3=document.getElementById('.chp-hDebut');
+        const span4=document.getElementByIdqaaaaaaaa('.chp-hFin');
         var hD=Date.parse(`${date} ${hDebut}`)
         var hF=Date.parse(`${date} ${hFin}`)
         var now=Date.parse(new Date())
+
+        // console.log(valtextarea,date,hDebut,hFin);
+        // tabInput=[valtextarea,date,hDebut,hFin]
+
+        chekValue(valtextarea,span1);
+        chekValue(date,span2);
+        chekValue(hDebut,span3);
+        chekValue(hFin,span4);
+            // e.preventDefault();
         if (hF<hD || hD < now){
             e.preventDefault
         }else{
@@ -168,17 +196,11 @@ notes.addEventListener('click',function () {
             // On quitte le modal quand on click sur Ajouter
             containerModalNotes.className="close-modalConfirm";
         }
+        
+        
         // console.log(hD,hF,now);
     })
 
 })
-/* *************************************** */
-            /* Partie Liste Corbeille */
-/* *************************************** */
-    const partieCorbeille=document.createElement('div');
-    partieCorbeille.className='partie-corbeille'
-    const listeCorbeille=document.createElement('div');
-    listeCorbeille.className='liste-corbeille'
-    partieCorbeille.appendChild(listeCorbeille);
 
-body.append(barreHaute,containerModal,icon,containerModalNotes,partieCorbeille);
+body.append(barreHaute,containerModal,icon,containerModalNotes);

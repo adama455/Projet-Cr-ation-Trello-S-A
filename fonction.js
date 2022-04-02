@@ -80,13 +80,30 @@ function creerModalConfirm(message,elemClos,elemSup) {
     // modalConfirm.className='modal-confrm';
     // divBtnConfirm.className='div-btnconfirm'
 }
+function chekValue(champs,spanM){
+    if (champs==""){
+        spanM.classList.add('show-message-error');
+        e.preventDefault();
+    }else{
+        
+    }
+}
+
+// function dateValide(hDebut,hFin,date) {
+//     var hD=Date.parse(`${date} ${hDebut}`)
+//     var hF=Date.parse(`${date} ${hFin}`)
+//     var now=Date.parse(new Date())
+//     if (hF<hD || hD < now){
+//         e.preventDefault
+//     }
+// }
 
 function creationCarte(textarea,input1,input2,input3) { 
     // Verification des champs vides:  
-    if (textarea=="" || input1=="" || input2 =="" || input3==""){
-        // containerModalNotes.appendChild(errorMsg('Les champs ne doit pas etre vide!'))
-        e.preventDefault();
-    }     
+    // if (textarea=="" || input1=="" || input2 =="" || input3==""){
+    //     // containerModalNotes.appendChild(errorMsg('Les champs ne doit pas etre vide!'))
+    //     e.preventDefault();
+    // }     
     let nbrCarte=1;
         const carte= document.createElement('div');
         carte.id='carte'+nbrCarte;
@@ -138,14 +155,11 @@ function creationCarte(textarea,input1,input2,input3) {
 
 
 
+// 
 
-
-function errorMsg(input,small,message){
-    if (input.value) {
-        small.classList.add('show-message-error');
-        small.innerText=message; 
-    }   
-};
+// function errorMsg(input,message){
+//     const  
+// };
 
 /* *************************************************** */
 function DeplacerVersCorbeil(icon,elemt) {
