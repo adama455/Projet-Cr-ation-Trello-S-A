@@ -12,6 +12,13 @@ barreHaute.className='barre-haute';
         notes.className='note animate__animated animate__rotateInDownRight   animate__delay-1s 1s';
         notes.innerText='+ Notes'
         colonneNotes.append(colonne,notes)
+        // Creation Icon para et Quand on clid sur
+        //  On ouvre les bouton Colonne et Note
+        const icon = document.createElement('i');
+        icon.className="fa-solid fa-gears";
+        icon.addEventListener('click',function(){
+            colonneNotes.classList.add('show-colonne-note');
+        });
     /* *************************************** */
                 /* Partie Corbeille */
     /* *************************************** */
@@ -35,12 +42,6 @@ barreHaute.className='barre-haute';
         iconeSave.className='bx bx-download icon-autosave';
     barreHaute.append(AutoSave,colonneNotes,presCorbeille,corbeille,);
     
-    const icon = document.createElement('i');
-    icon.className="fa-solid fa-gears";
-    icon.addEventListener('click',function(){
-        colonne.classList.add('apparence-barr-haut');
-    });
-
     const containerModal=document.querySelector('.modal-container');
   let nbreCols=1;
   colonne.addEventListener('click',function(){
@@ -75,13 +76,13 @@ barreHaute.className='barre-haute';
                 deleteModal.classList.toggle('delett-colonne');
                 deleteModal.addEventListener('click',function(e){
                     if (e.target.parentElement !=containerModal.children[0] ||containerModal.children.length===1){
-                        /* Appel de la fonction Confirme Suppression */
-                        // body.appendChildcreerModalConfirm("Voulez vous vraiment supprimer la colonne!",e.target.parentElement);
+                        // creerModalConfirm("Voulez vous vraiment quitter le modalNote!","",e.target.parentElement);    
                         confirm('Etes vous sûr de supprimer la colonne!');
                         e.target.parentElement.remove();
-                        nbreCols--;
+                        notification("Vous venez de supprimer une colonne et ses tâches!!");
+                        nbreCols--
                     }
-                reflesh();    
+                    reflesh();    
                 })
                 reflesh();    
             })
@@ -91,7 +92,7 @@ barreHaute.className='barre-haute';
             nbreCols++;
             
     } else{
-        alert('Vous avez atteint la limite de Colonne!')
+        notification('Vous avez atteint la limite de Colonne!');
     }
 })
 /**********************************************************************************
@@ -111,7 +112,7 @@ notes.addEventListener('click',function () {
                 containerModalNotes.className="container-modal-note";
                 containerModalNotes.innerHTML=
                 `
-            <div class="modal-note  animate__animated animate__heartBeat">
+            <div class="modal-note">
                 <div class="taches">
                     <h3> NOUVELLE TACHE</h3>
                     <i class="fa-solid fa-rectangle-xmark"></i>
@@ -136,14 +137,14 @@ notes.addEventListener('click',function () {
         
             `;
         }else{
-            alert("Il faut aumoins une Colonne avant ouvrire le Modal");
+            notification("Il faut aumoins une Colonne avant ouvrire le Modal");
         }
 
     // Quitter le modal Notes lorsqu'on click sur Icon Close
     const iconClose=document.querySelector('.fa-rectangle-xmark');
     iconClose.addEventListener('click',function(){
         /* Apelle de la fonction Confirmation */
-        body.appendChild(creerModalConfirm("Voulez vous vraiment quitter le modalNote!",containerModalNotes));    
+     creerModalConfirm("Voulez vous vraiment quitter le modalNote!",containerModalNotes,"");    
     })
     /* ########Ajouter du text lorsqu'on click sur 
         le boutton ajouter du formulaire ####### */
@@ -155,18 +156,21 @@ notes.addEventListener('click',function () {
         var date=document.getElementById('val-date').value;
         var hDebut=document.getElementById('val-hDebut').value;
         var hFin=document.getElementById('val-hFin').value;
+        console.log(valtextarea,date,hDebut,hFin);
         var hD=Date.parse(`${date} ${hDebut}`)
         var hF=Date.parse(`${date} ${hFin}`)
         var now=Date.parse(new Date())
-        if (hF<hD || hD < now) {
+        if (hF<hD || hD < now){
             e.preventDefault
         }else{
             const contenuModal=document.querySelector('.contenu-modal');
             contenuModal.appendChild(creationCarte(valtextarea,date,hDebut,hFin));
+            // On quitte le modal quand on click sur Ajouter
+            containerModalNotes.className="close-modalConfirm";
         }
         // console.log(hD,hF,now);
     })
-    
+
 })
 /* *************************************** */
             /* Partie Liste Corbeille */

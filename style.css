@@ -6,6 +6,25 @@
 :root{
 
 }
+.notification{
+    height: 8.7vh;
+    width: 25%;
+    background-color: rgb(118, 247, 101);
+    border-top: 4px solid red;
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+    position: absolute;
+    z-index: 3;
+    right: 13%;
+    display: flex;
+    text-align: center;
+    font-size: 1.3em;
+    padding-top: 1%;
+    display: none;  
+}
+.show-notification{
+    display: block;
+}
 body{
     margin: 0;
     background-image: url('bg.jpeg');
@@ -52,6 +71,12 @@ body::after{
     justify-content: end;
     align-items: center;
     margin-left: 14%;
+    /* visibility: hidden; */
+    /* transform: translateY(-200%); */
+}
+.show-colonne-note{
+    visibility: visible;
+    /* transform: translateY(400%); */
 }
 .colonne-note .colonne{
     width: 18%;
@@ -115,8 +140,11 @@ body .partie-corbeille{
     height: 82%;
     border: 4px solid red ;
     transition: all 1s ease-in-out;
-    /* border-right: 12px solid white; */
     background-color: white;
+}
+.cacher-partie-corbeille{
+    transform: translateX(106%);
+    border-left: 8px solid rgb(91, 233, 26);
 }
 .barre-haute .pres-corbeille{
     position: absolute;
@@ -150,19 +178,11 @@ body .partie-corbeille{
     right: 2%;
 }
 .partie-corbeille .liste-corbeille{
-    /* border: 1px solid; */
     width: 100%;
     padding: 2%;
     overflow-y: auto;
 }
-.cacher-partie-corbeille{
-    border-left: 8px solid rgb(91, 233, 26);
-    transform: translate(105%);
-}
-/* .cacher-liste{
-    opacity: 0;
-    border-left: 5px solid white;
-} */
+
 /* ***********************************************
 ************************************************** */
 
@@ -192,11 +212,6 @@ body .partie-corbeille{
     /* padding: 1%; */
     /* margin-right:5px; */
 }
-
-/* .suppression-modal{
-    background-color: rgba(248, 50, 50,0.5);
-    border: none;
-} */
 .titre-modal{
     display: flex;
     background-color:rgba(109, 106, 106, 0.3);
@@ -347,9 +362,9 @@ body .partie-corbeille{
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 4%;
+    height: 5%;
     border: 4px solid;
-    width: 100%;
+    width: 7%;
     font-size: 25px;
     cursor: pointer;
     margin-bottom: 1%;
@@ -362,11 +377,11 @@ body .partie-corbeille{
     }
     50%{
         transform: scale(0.5);
-        color: green;
         
     }
     100%{
         transform: scale(1);
+        color: green;
     }
 }
 
@@ -424,7 +439,8 @@ body .partie-corbeille{
     left: 0;
     right: 0;
     bottom: 0;
-    z-index: 1;
+    z-index: 2;
+    display: none;
 }
 .modal-confrm{
     background-color: aliceblue;
@@ -437,9 +453,13 @@ body .partie-corbeille{
     top: 50%;
     width: 25%;
     padding: 0 3% 1% 3%;
-    left: 50%;
+    left: 37.5%;
     transform: translate(-50%,-50%);
     position: absolute;
+    z-index: 3;
+}
+.show-modal-confirm{
+    display: block;
 }
 .modal-confrm .div-btnconfirm{
     display: flex;

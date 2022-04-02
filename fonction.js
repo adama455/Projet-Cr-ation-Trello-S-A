@@ -29,7 +29,6 @@
     return containerModalNotes; 
     // return body;
 } */
-
 function reflesh() {
     const ListinputTitreModal=document.querySelectorAll('.input-titre-modal');
     ListinputTitreModal.forEach((titreModal,i)=>{
@@ -39,37 +38,48 @@ function reflesh() {
     })
 }
 
-function creerModalConfirm(message,elemClos) {
-    const containerModalConfirm= document.createElement('div');
-    const modalConfirm= document.createElement('div');
-    const p = document.createElement('p');
-    const divBtnConfirm = document.createElement('div');
-    const btnConfirm=document.createElement('button');
-    const btnCancel=document.createElement('button');
-    containerModalConfirm.className='container-modal-confirm'
-    modalConfirm.className='modal-confrm';
-    divBtnConfirm.className='div-btnconfirm'
-    p.innerText=message
-    btnCancel.innerText='Cancel';
-    btnConfirm.innerText='Confirm';
-    divBtnConfirm.append(btnCancel,btnConfirm);
-    modalConfirm.append(p,divBtnConfirm)
-    containerModalConfirm.appendChild(modalConfirm)
-    
-    btnConfirm.addEventListener('click',()=>{
-        // elemtSup.remove();
-        elemClos.className="animate__animated animate__hinge  close-modalConfirm";
-        containerModalConfirm.className="animate__animated animate__hinge  close-modalConfirm";
-        
-    })
-    btnCancel.addEventListener('click',()=>{
-        containerModalConfirm.className="animate__animated animate__hinge  close-modalConfirm";
-        
-    })
-    body.appendChild(containerModalConfirm);
-    return body;
+function notification(message){
+    const notif=document.querySelector('.notification');
+    notif.classList.add('show-notification');
+    notif.innerText=message;
+    setTimeout(() => {
+    notif.classList.remove('show-notification');
+    }, 5000);
 }
 
+function creerModalConfirm(message,elemClos,elemSup) {
+    const containerModalConfirm = document.querySelector('.container-modal-confirm');
+    const modalConfirm= document.querySelector('.modal-confrm');
+    const p = document.querySelector('.para');
+    const btnConfirm=document.getElementsByTagName('button');
+    p.innerText=message
+    containerModalConfirm.classList.add('show-modal-confirm')
+    btnConfirm[1].addEventListener('click',()=>{
+        elemClos.className="animate__animated animate__hinge  close-modalConfirm";
+        containerModalConfirm.classList.remove("show-modal-confirm");
+        elemSup.remove();
+        containerModalConfirm.classList.remove("show-modal-confirm");
+        
+    })
+    btnConfirm[0].addEventListener('click',()=>{
+        containerModalConfirm.className="animate__animated animate__hinge  close-modalConfirm";
+        
+    })
+    
+    // const divBtnConfirm = document.createElement('div');
+    // const btnCancel=document.createElement('button');
+    // return body;
+    // divBtnConfirm.append(btnCancel,btnConfirm);
+    // modalConfirm.append(p,divBtnConfirm)
+    // containerModalConfirm.appendChild(modalConfirm)
+    // body.appendChild(containerModalConfirm);
+    // elemtSup.remove();
+    // btnCancel.innerText='Cancel';
+    // btnConfirm.innerText='Confirm';
+    // containerModalConfirm.className='container-modal-confirm'
+    // modalConfirm.className='modal-confrm';
+    // divBtnConfirm.className='div-btnconfirm'
+}
 
 function creationCarte(textarea,input1,input2,input3) { 
     // Verification des champs vides:  
@@ -77,7 +87,6 @@ function creationCarte(textarea,input1,input2,input3) {
         // containerModalNotes.appendChild(errorMsg('Les champs ne doit pas etre vide!'))
         e.preventDefault();
     }     
-    
     let nbrCarte=1;
         const carte= document.createElement('div');
         carte.id='carte'+nbrCarte;
@@ -150,8 +159,8 @@ function DeplacerVersCorbeil(icon,elemt) {
     elemt.addEventListener('dblclick',(e)=>{
         const contenuModal=document.querySelector('.contenu-modal');
         AlertConfirm(contenuModal,e.target.parentElement)
-        console.log(e.target.parentElement);
         elemt.className='carte';
+        // console.log(e.target.parentElement);
     })  
 }
 
@@ -168,18 +177,22 @@ function corbeill() {
         /* Déplacement des carte(Taches*/
 /****************************************************/
 function DeplacementTaches(icon1,icon2) {
+    const modalNote=document.querySelector('modal-note');
     icon1.addEventListener('click',(e)=>{
         const modal=e.target.parentElement.parentElement.parentElement;
         const idEntier=parseInt(modal.id)
         const colSuivant=document.getElementById(idEntier+1);
         colSuivant.children[1].appendChild(e.target.parentElement);
+        modalNote.className="animate__animated animate__zoomOutRight"
         })
     icon2.addEventListener('click',(e)=>{
         const modal=e.target.parentElement.parentElement.parentElement;
         const idEntier=parseInt(modal.id)
         const colPrecedent=document.getElementById(idEntier-1);
         colPrecedent.children[1].appendChild(e.target.parentElement);
-    })
+        modalNote.className="animate__animated animate__zoomOutLeft"
+    })     
+    
 }
 
 /* *************************************** */
