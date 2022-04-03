@@ -33,7 +33,7 @@ function reflesh() {
     const ListinputTitreModal=document.querySelectorAll('.input-titre-modal');
     ListinputTitreModal.forEach((titreModal,i)=>{
         titreModal.value='Colonne'+(i+1);
-        titreModal.parentElement.parentElement.id=i+1; 
+        titreModal.parentElement.parentElement.id="colonne_"+(i+1); 
         console.log(titreModal.parentElement.id);
     })
 }
@@ -57,8 +57,8 @@ function creerModalConfirm(message,elemClos,elemSup) {
     btnConfirm[1].addEventListener('click',()=>{
         elemClos.className="animate__animated animate__hinge  close-modalConfirm";
         containerModalConfirm.classList.remove("show-modal-confirm");
-        elemSup.remove();
-        containerModalConfirm.classList.remove("show-modal-confirm");
+        // elemSup.remove();
+        // containerModalConfirm.classList.remove("show-modal-confirm");
         
     })
     btnConfirm[0].addEventListener('click',()=>{
@@ -107,6 +107,8 @@ function creationCarte(textarea,input1,input2,input3) {
     let nbrCarte=1;
         const carte= document.createElement('div');
         carte.id='carte'+nbrCarte;
+        carte.setAttribute("data_idCol","1");
+        // console.log(carte);
         carte.className='carte animate__animated animate__rollIn';
         const textareaCarte= document.createElement('textarea');
         textareaCarte.className='textarea-carte'
@@ -124,10 +126,12 @@ function creationCarte(textarea,input1,input2,input3) {
         const divIconEditSupp= document.createElement('div');
         const iconSupp= document.createElement('i');
         const iconEdit= document.createElement('i');
+        const iconRestor= document.createElement('i');
         divIconEditSupp.className='edit-supp';
         iconEdit.className="edit bx bx-pencil";
         iconSupp.className="supp bx bx-trash"
-        divIconEditSupp.append(iconEdit,iconSupp);
+        iconRestor.className="restor bx bxs-share"
+        divIconEditSupp.append(iconRestor,iconEdit,iconSupp);
         divDetail.className="div-detail animate__animated animate__flipInX";
         divDate.className='date';
         divHDebut.className='date';
@@ -143,10 +147,30 @@ function creationCarte(textarea,input1,input2,input3) {
         divHDebut.innerText='Heure-debut: '+input2;
         divHFin.innerText= 'Heure-Fin: '+input3;
         // Deplacement taches
-        DeplacementTaches(iconRowD,iconRowG)
+        DeplacementTaches(iconRowD,iconRowG) 
         carte.append(iconRowG,iconRowD,textareaCarte,divDetail,divIconEditSupp);
-        DeplacerVersCorbeil(iconSupp,carte);
-            
+        //*************************** */ DeplacerVersCorbeil(iconSupp,carte);
+        iconSupp.addEventListener('click',(e)=>{
+            const listeCorbeille=document.querySelector('.liste-corbeille');
+            const iconRow=document.querySelector('.icon-deplacement');
+            var elemt= e.target.parentElement.parentElement;
+            listeCorbeille.appendChild(elemt);
+            notification("Vous venez de déplacer la tâche vers la corbeille!");
+            elemt.classList.add('carte-liste-corbeille');
+        })
+        // ***************************Restaurer la tache vers la colonne d'origine.
+        iconRestor.addEventListener('click',(e)=>{ 
+            // *************************Recuperation de l'attribut de la tache
+            var elemt = e.target.parentElement.parentElement.getAttribute("data_idCol");
+            var colonneOrigine=document.querySelector(`#colonne_${elemt}`)
+            var colonne1=document.getElementById('colonne_1');
+            if (colonneOrigine) {
+                colonneOrigine.children[1].appendChild(carte);
+            }else{
+                colonne1.children[1].appendChild(carte);
+            }
+            notification('Tâche restaurer avec succées!')
+        })  
         nbrCarte++;
         return carte;
 }
@@ -162,11 +186,15 @@ function creationCarte(textarea,input1,input2,input3) {
 // };
 
 /* *************************************************** */
-function DeplacerVersCorbeil(icon,elemt) {
+/* function DeplacerVersCorbeil(icon,elemt) {
     icon.addEventListener('click',(e)=>{
         const iconRow=document.querySelector('.icon-deplacement');
-        elemt= e.target.parentElement.parentElement;
-        listeCorbeille.appendChild(elemt);
+        elemt= e.target.parentElement.getAtribut("data_idCol");
+        // const id= parseInt(elemt);
+        const colonne=document.querySelector(`#colonne_${elemt}`)
+        console.log(colonne);
+        // listeCorbeille.appendChild(elemt);
+
         elemt.classList.add('carte-liste-corbeille');
         // iconRow.classList.add("cacher-iconRow");
     }) 
@@ -176,7 +204,7 @@ function DeplacerVersCorbeil(icon,elemt) {
         elemt.className='carte';
         // console.log(e.target.parentElement);
     })  
-}
+} */
 
 function corbeill() {
     const partieCorbeille=document.createElement('div');
@@ -194,19 +222,29 @@ function DeplacementTaches(icon1,icon2) {
     const modalNote=document.querySelector('modal-note');
     icon1.addEventListener('click',(e)=>{
         const modal=e.target.parentElement.parentElement.parentElement;
-        const idEntier=parseInt(modal.id)
-        const colSuivant=document.getElementById(idEntier+1);
+        var tab=modal.id.split("_",2);
+        // console.log(tab);
+        const idEntier=parseInt(tab[1]);
+        const colSuivant=document.getElementById("colonne_"+(idEntier+1));
         colSuivant.children[1].appendChild(e.target.parentElement);
-        modalNote.className="animate__animated animate__zoomOutRight"
-        })
+        const idSvt=colSuivant.id.split("_",2);
+        notification('Vous avez déplacer la tache vers la clonne suivante!')
+        // const carte=document.querySelector('.carte');
+        carte.setAttribute("data_idCol",idSvt[1]);
+        modalNote.className="animate__animated animate__zoomOutRight"  
+
+    })
     icon2.addEventListener('click',(e)=>{
         const modal=e.target.parentElement.parentElement.parentElement;
-        const idEntier=parseInt(modal.id)
-        const colPrecedent=document.getElementById(idEntier-1);
+        var tab=modal.id.split("_",2);
+        const idEntier=parseInt(tab[1])
+        const colPrecedent=document.getElementById("colonne_"+(idEntier-1));
         colPrecedent.children[1].appendChild(e.target.parentElement);
+        notification('Vous avez déplacer la tache vers la clonne precedante!')
+        carte.setAttribute("data_idCol",idSvt[1]);
         modalNote.className="animate__animated animate__zoomOutLeft"
-    })     
     
+    })        
 }
 
 /* *************************************** */

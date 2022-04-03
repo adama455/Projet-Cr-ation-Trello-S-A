@@ -67,7 +67,7 @@ barreHaute.className='barre-haute';
          const modal=document.createElement('div');
          const titreModal=document.createElement('div');
          titreModal.className='titre-modal';
-         modal.id=+nbreCols;
+         modal.id="colonne_"+nbreCols;
          modal.className='modal animate__animated animate__flip';
          const inputTitreModal=document.createElement('input');
          inputTitreModal.type="text";
@@ -175,7 +175,7 @@ notes.addEventListener('click',function () {
         const span1=document.querySelector('.chp-textarea');
         const span2=document.getElementById('.chp-date');
         const span3=document.getElementById('.chp-hDebut');
-        const span4=document.getElementByIdqaaaaaaaa('.chp-hFin');
+        const span4=document.getElementById('.chp-hFin');
         var hD=Date.parse(`${date} ${hDebut}`)
         var hF=Date.parse(`${date} ${hFin}`)
         var now=Date.parse(new Date())
