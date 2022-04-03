@@ -220,6 +220,12 @@ body .partie-corbeille{
     padding: 2%;
     overflow-y: auto;
 }
+.liste-corbeille .carte .bxs-right-arrow{
+    display: none;
+}
+.liste-corbeille .carte .bxs-left-arrow{
+    display: none;
+}
 
 /* ***********************************************
 ************************************************** */

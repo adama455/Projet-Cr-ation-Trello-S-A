@@ -229,10 +229,9 @@ function DeplacementTaches(icon1,icon2) {
         colSuivant.children[1].appendChild(e.target.parentElement);
         const idSvt=colSuivant.id.split("_",2);
         notification('Vous avez déplacer la tache vers la clonne suivante!')
-        // const carte=document.querySelector('.carte');
+        const carte=document.querySelector('.carte');
         carte.setAttribute("data_idCol",idSvt[1]);
-        modalNote.className="animate__animated animate__zoomOutRight"  
-
+        modalNote.className="animate__animated animate__zoomOutRight";  
     })
     icon2.addEventListener('click',(e)=>{
         const modal=e.target.parentElement.parentElement.parentElement;
