@@ -47,7 +47,7 @@ function notification(message){
     }, 5000);
 }
 
-function creerModalConfirm(message,elemClos,elemSup) {
+function creerModalConfirm(message,elemClos){
     const containerModalConfirm = document.querySelector('.container-modal-confirm');
     const modalConfirm= document.querySelector('.modal-confrm');
     const p = document.querySelector('.para');
@@ -58,27 +58,13 @@ function creerModalConfirm(message,elemClos,elemSup) {
         elemClos.className="animate__animated animate__hinge  close-modalConfirm";
         containerModalConfirm.classList.remove("show-modal-confirm");
         // elemSup.remove();
-        // containerModalConfirm.classList.remove("show-modal-confirm");
-        
+        containerModalConfirm.classList.remove("show-modal-confirm");  
     })
     btnConfirm[0].addEventListener('click',()=>{
         containerModalConfirm.className="animate__animated animate__hinge  close-modalConfirm";
         
     })
     
-    // const divBtnConfirm = document.createElement('div');
-    // const btnCancel=document.createElement('button');
-    // return body;
-    // divBtnConfirm.append(btnCancel,btnConfirm);
-    // modalConfirm.append(p,divBtnConfirm)
-    // containerModalConfirm.appendChild(modalConfirm)
-    // body.appendChild(containerModalConfirm);
-    // elemtSup.remove();
-    // btnCancel.innerText='Cancel';
-    // btnConfirm.innerText='Confirm';
-    // containerModalConfirm.className='container-modal-confirm'
-    // modalConfirm.className='modal-confrm';
-    // divBtnConfirm.className='div-btnconfirm'
 }
 function chekValue(champs,spanM){
     if (champs==""){
@@ -103,7 +89,8 @@ function creationCarte(textarea,input1,input2,input3) {
     // if (textarea=="" || input1=="" || input2 =="" || input3==""){
     //     // containerModalNotes.appendChild(errorMsg('Les champs ne doit pas etre vide!'))
     //     e.preventDefault();
-    // }     
+    // }  
+
     let nbrCarte=1;
         const carte= document.createElement('div');
         carte.id='carte'+nbrCarte;
@@ -114,8 +101,8 @@ function creationCarte(textarea,input1,input2,input3) {
         textareaCarte.className='textarea-carte'
         const iconRowG=document.createElement('i');
         const iconRowD=document.createElement('i');
-        iconRowG.className="bx bxs-left-arrow icon-deplacement";
-        iconRowD.className="bx bxs-right-arrow icon-deplacement";
+        iconRowG.className="bx bx-chevron-left icon-deplacement";
+        iconRowD.className="bx bx-chevron-right icon-deplacement";
         textareaCarte.rows='3'
         // creation des div de recuperation des dates:
         const divDetail=document.createElement('div');
@@ -123,19 +110,21 @@ function creationCarte(textarea,input1,input2,input3) {
         const divHDebut= document.createElement('div');
         const divHFin= document.createElement('div');
         // Creation des icones Edit et Supprimer des taches
-        const divIconEditSupp= document.createElement('div');
+        const divIconSupp= document.createElement('div');
         const iconSupp= document.createElement('i');
-        const iconEdit= document.createElement('i');
-        const iconRestor= document.createElement('i');
-        divIconEditSupp.className='edit-supp';
-        iconEdit.className="edit bx bx-pencil";
+        // const iconEdit= document.createElement('i');
+        divIconSupp.className='edit-supp';
         iconSupp.className="supp bx bx-trash"
-        iconRestor.className="restor bx bxs-share"
-        divIconEditSupp.append(iconRestor,iconEdit,iconSupp);
+        // iconEdit.className="edit bx bx-pencil";
+        const iconRestor= document.createElement('i');
+        divIconSupp.append(iconSupp,iconRestor);
         divDetail.className="div-detail animate__animated animate__flipInX";
         divDate.className='date';
+        divDate.style.backgroundColor='#'+Math.floor(Math.random()*16777215).toString(16);
         divHDebut.className='date';
+        divHDebut.style.backgroundColor='#'+Math.floor(Math.random()*16777215).toString(16);
         divHFin.className='date';
+        divHFin.style.backgroundColor='#'+Math.floor(Math.random()*16777215).toString(16);
         divDetail.append(divDate,divHDebut,divHFin);
         //Appel de la fonction showDetail
         carte.addEventListener('mouseover',()=>{
@@ -143,20 +132,20 @@ function creationCarte(textarea,input1,input2,input3) {
         })
         // Insertion des valeur de l'input;
         textareaCarte.innerText=textarea;
-        divDate.innerText='Date: '+input1;
-        divHDebut.innerText='Heure-debut: '+input2;
-        divHFin.innerText= 'Heure-Fin: '+input3;
+        divDate.innerHTML='<div>Date:</div>'+input1;
+        divHDebut.innerHTML='<div>Heure-debut:</div>'+input2;
+        divHFin.innerHTML= '<div>Heure-Fin:</div> '+input3;
         // Deplacement taches
         DeplacementTaches(iconRowD,iconRowG) 
-        carte.append(iconRowG,iconRowD,textareaCarte,divDetail,divIconEditSupp);
+        carte.append(iconRowG,iconRowD,textareaCarte,divDetail,divIconSupp);
         //*************************** */ DeplacerVersCorbeil(iconSupp,carte);
         iconSupp.addEventListener('click',(e)=>{
             const listeCorbeille=document.querySelector('.liste-corbeille');
-            const iconRow=document.querySelector('.icon-deplacement');
             var elemt= e.target.parentElement.parentElement;
             listeCorbeille.appendChild(elemt);
+            iconRestor.className="restor bx bxs-share";
+            iconSupp.className=""
             notification("Vous venez de déplacer la tâche vers la corbeille!");
-            elemt.classList.add('carte-liste-corbeille');
         })
         // ***************************Restaurer la tache vers la colonne d'origine.
         iconRestor.addEventListener('click',(e)=>{ 
@@ -169,6 +158,8 @@ function creationCarte(textarea,input1,input2,input3) {
             }else{
                 colonne1.children[1].appendChild(carte);
             }
+            iconSupp.className="supp bx bx-trash";
+            iconRestor.className=""
             notification('Tâche restaurer avec succées!')
         })  
         nbrCarte++;
@@ -177,34 +168,6 @@ function creationCarte(textarea,input1,input2,input3) {
 
 /* ************FONCTION MESSAGE D'ERREUR********** */
 
-
-
-// 
-
-// function errorMsg(input,message){
-//     const  
-// };
-
-/* *************************************************** */
-/* function DeplacerVersCorbeil(icon,elemt) {
-    icon.addEventListener('click',(e)=>{
-        const iconRow=document.querySelector('.icon-deplacement');
-        elemt= e.target.parentElement.getAtribut("data_idCol");
-        // const id= parseInt(elemt);
-        const colonne=document.querySelector(`#colonne_${elemt}`)
-        console.log(colonne);
-        // listeCorbeille.appendChild(elemt);
-
-        elemt.classList.add('carte-liste-corbeille');
-        // iconRow.classList.add("cacher-iconRow");
-    }) 
-    elemt.addEventListener('dblclick',(e)=>{
-        const contenuModal=document.querySelector('.contenu-modal');
-        AlertConfirm(contenuModal,e.target.parentElement)
-        elemt.className='carte';
-        // console.log(e.target.parentElement);
-    })  
-} */
 
 function corbeill() {
     const partieCorbeille=document.createElement('div');
@@ -257,14 +220,28 @@ function AlertConfirm(elemtPrt,elemtFils) {
 }
 // ********************************************
 
+function showError(input,message) {
+    const formControl= input.parentElement;
+    formControl.className = 'form-control error';
+    const small = formControl.querySelector('small')
+    small.innerText = message;
+}
+function showSuccess(input) {
+    const formControl = input.parentElement;
+    formControl.className = 'form-control success';   
+}
 
-// boutonAdd.addEventListener('submit',(e)=>{
-/* function Deplacer(bouton){
-    bouton.addEventListener('click',(e)=>{
-        const modal=e.target.parentElement.parentElement.parentElement;
-        const idEntier=parseInt(modal.id)
-        const colPrecedent=document.getElementById(idEntier-1);
-        colPrecedent.children[1].appendChild(e.target.parentElement);
-    })
-    // console.log(colSuivant)
-} */
+function checRequired(inputArray) {
+    inputArray.forEach(function(input) {
+        if (input.value==='') {
+            showError(input,"Le champ est obligatoire")
+        }else{
+            showSuccess(input);
+        }
+    });
+}
+function dateD_F(input1,input2) {
+    if (input1.value >= input2.value) {
+        showError(input2,"L'heure de Fin doit etre supperieur à l'heure debut");
+    }
+}

@@ -12,6 +12,9 @@
     <title>Projet-creation-trello</title>
 </head>
 <body>
+    <div class="demarrer" id="demarrer">
+        <i class='bx bxs-chevrons-down icon-demarrer'></i>
+    </div>
     <!-- <div class="icon-liste"><i class=''></i></div> -->
     <!-- ***************************************** -->
     <div class="listes-taches animate__animated animate__zoomIn"> 
@@ -23,14 +26,47 @@
     </div>
     <!-- ***************************************** -->
     <div class="modal-container" id="modal-container">
-
-    </div>
-    <!-- ************************************************* -->
         <div class="partie-corbeille">
             <div class="liste-corbeille">
 
             </div>
         </div>
+    </div>
+    <!-- ************************************************* -->
+        
+
+   <!--      <div class="container-modal-note">
+            <div class="modal-note">
+                <div class="taches">
+                    <h3> NOUVELLE TACHE</h3>
+                    <i class="fa-solid fa-rectangle-xmark"></i>
+                </div>
+                <form class="form modal">
+                    <h3>Remplir les informations de la nouvelle taches:</h3>
+                    <div class="form-control">
+                        <label for="">Tâches</label>
+                        <textarea name="valnote" id="note" class="input" value="" cols="30" rows="10" value=""></textarea>
+                        <small class="chp-textarea" >Le champs est vide</small>  
+                    </div>
+                    <div class="form-control">
+                        <label for="">Date</label>
+                        <input type="date" name="" class="input" value="" id="date">
+                        <small id="chp-date" >date invalide</small> 
+                    </div>
+                    <div class="form-control">
+                        <label for="">Heure de Début</label>
+                        <input type="time" name="" class="input" value="" id="hDebut">
+                        <small id="chp-hDebut" >heure de Debut invalide</small>  
+                    </div>
+                    <div class="form-control">
+                        <label for="">Heure de Fin</label>
+                        <input type="time" name="" class="input" value="" id="hFin">
+                        <small id="chp-hFin" >heure de Fin invalide</small>
+                    </div>
+                    <button class="btn">Ajout</button>
+                </form> 
+            </div>
+        </div> -->
 
     <!-- ***************************************** -->
     <div class="container-modal-confirm">
@@ -43,7 +79,7 @@
             </div>
         </div>
     </div>
-
+    <script src="back.js"></script>
     <script src="script.js"></script>
     <script src="fonction.js"></script>
     <script src="https://unpkg.com/boxicons@2.1.2/dist/boxicons.js"></script>

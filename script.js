@@ -3,13 +3,13 @@ const body = document.getElementsByTagName('body')[0];
 const barreHaute=document.createElement('div');
 barreHaute.className='barre-haute';
     const colonne=document.createElement('div');
-        colonne.className='colonne animate__animated animate__rotateInDownLeft  animate__delay-1s 1s';
+        colonne.className='colonne animate__animated animate__rotateInDownLeft animate__delay-1s 1s';
         colonne.innerText='+ Colonne';
         // colonne.classList.add('animate__animated', 'animate__bounceOutLeft');
     const notes=document.createElement('div');
     const colonneNotes=document.createElement('div');
     colonneNotes.className="colonne-note"
-        notes.className='note animate__animated animate__rotateInDownRight   animate__delay-1s 1s';
+        notes.className='note animate__animated animate__rotateInDownRight animate__delay-1s 1s';
         notes.innerText='+ Notes'
         colonneNotes.append(colonne,notes)
         // Creation Icon para et Quand on clid sur
@@ -23,12 +23,13 @@ barreHaute.className='barre-haute';
                 /* Partie Corbeille */
     /* *************************************** */
         const corbeille=document.createElement('i');
-        corbeille.className="fa-solid fa-trash-can corbeille";
+        corbeille.className="fa-solid fa-trash-can";
+        corbeille.classList.add("corbeille");
         const presCorbeille=document.createElement('i');
         presCorbeille.className="bx bx-left-arrow-alt pres-corbeille"
         corbeille.addEventListener('click',()=>{
             const partieCorbeille = document.querySelector('.partie-corbeille');
-            partieCorbeille.classList.toggle('show-partie-corbeille');
+            partieCorbeille.classList.toggle('showCorbeille');
         })
     /* ******************************************************
     ################## Partie Auto-SAve ##########################
@@ -56,12 +57,12 @@ barreHaute.className='barre-haute';
         })
 
 
-    barreHaute.append(AutoSave,liste,colonneNotes,presCorbeille,corbeille,);
+    barreHaute.append(AutoSave,liste,colonneNotes,presCorbeille,corbeille);
     
     const containerModal=document.querySelector('.modal-container');
   let nbreCols=1;
   colonne.addEventListener('click',function(){
-    if (nbreCols<=5) { 
+    if (nbreCols<=5){ 
          // containerModal.className='modal-container';
          colonne.classList.add('click-colonne')
          const modal=document.createElement('div');
@@ -83,7 +84,7 @@ barreHaute.className='barre-haute';
             
             modal.append(titreModal,contenuModal);
             containerModal.appendChild(modal);
-            // ################## Suppression d'une colonne ###############
+            // ################## Suppression d'une colonne ##############
             // ***********************************************************
             const deleteModal=document.createElement('i');
             deleteModal.className="fa-solid fa-circle-minus delete";
@@ -91,12 +92,11 @@ barreHaute.className='barre-haute';
             deleteModal.addEventListener('dblclick',()=>{
                 deleteModal.classList.toggle('delett-colonne');
                 deleteModal.addEventListener('click',function(e){
-                    if (e.target.parentElement !=containerModal.children[0] ||containerModal.children.length===1){
-                        // creerModalConfirm("Voulez vous vraiment quitter le modalNote!","",e.target.parentElement);    
-                        confirm('Etes vous sûr de supprimer la colonne!');
+                    if (e.target.parentElement !=containerModal.children[1] || containerModal.children.length===2){
+                        // creerModalConfirm("Voulez vous vraiment supprimer cette colonne!",modal);   
                         e.target.parentElement.remove();
-                        notification("Vous venez de supprimer une colonne et ses tâches!!");
                         nbreCols--
+                        notification("Vous venez de supprimer la colonne et ses tâches!!");
                     }
                     reflesh();    
                 })
@@ -104,23 +104,22 @@ barreHaute.className='barre-haute';
             })
             // getRandomColor()
             modal.style.backgroundColor='#'+Math.floor(Math.random()*16777215).toString(16);
-                //Incrementation lorsqu'on supprime une colonne
-            nbreCols++;
-            
+                //Incrementation lorsqu'on supprime une colonne::::::::::::::::::::::::::::
+            nbreCols++;   
     } else{
         notification('Vous avez atteint la limite de Colonne!');
     }
 })
-/**********************************************************************************
-#################### CREATION DU MODAL NOTE L'ORSQU'ON CLICK SUR NOTE################
-********************************************************************************* */
+/*****************************************************************************************
+    *******########## CREATION DU MODAL NOTE L'ORSQU'ON CLICK SUR NOTE ##########*****
+******************************************************************************************/
 const containerModalNotes=document.createElement('div');
-notes.addEventListener('click',function () {
+notes.addEventListener('click',function(){
        const modal=document.querySelector('.modal');
         /* 
         *******************************************
-            ON ouvre le Modal l'orsqu'on
-            a aumoins une Colonne 
+            *******ON ouvre le Modal l'orsqu'on
+                a aumoins une Colonne******* 
         *******************************************
         */
         if (modal) {
@@ -135,19 +134,27 @@ notes.addEventListener('click',function () {
                 </div>
                 <div class="form modal">
                     <h3>Remplir les informations de la nouvelle taches:</h3>
-                    <label for="">Tâches</label>
-                    <textarea name="valnote" id="val-note" class="input" value="" cols="30" rows="10" value=""></textarea>
-                    <small class="chp-textarea" >Le champs est vide</small>  
-                    <label for="">Date</label>
-                    <input type="date" name="" class="input" value="" id="val-date">
-                    <small id="chp-date" >date invalide</small> 
-                    <label for="">Heure de Début</label>
-                    <input type="time" name="" class="input" value="" id="val-hDebut">
-                    <small id="chp-hDebut" >heure de Debut invalide</small>  
-                    <label for="">Heure de Fin</label>
-                    <input type="time" name="" class="input" value="" id="val-hFin">
-                    <small id="chp-hFin" >heure de Fin invalide</small>
-                    <button class="btn" type="submit">Ajout</button>
+                    <div class="form-control">
+                        <label for="">Tâches</label>
+                        <textarea name="valnote" id="val-note" class="input" value="" cols="30" rows="10" value=""></textarea>
+                        <small class="chp-textarea" >Le champs est vide</small>  
+                    </div>
+                    <div class="form-control">
+                        <label for="">Date</label>
+                        <input type="date" name="" class="input" value="" id="val-date">
+                        <small id="chp-date" >date invalide</small> 
+                    </div>
+                    <div class="form-control">
+                        <label for="">Heure de Début</label>
+                        <input type="time" name="" class="input" value="" id="val-hDebut">
+                        <small id="chp-hDebut" >heure de Debut invalide</small>  
+                    </div>
+                    <div class="form-control">
+                        <label for="">Heure de Fin</label>
+                        <input type="time" name="" class="input" value="" id="val-hFin">
+                        <small id="chp-hFin" >heure de Fin invalide</small>
+                    </div>
+                        <button class="btn" type="submit">Ajout</button>
                     </div> 
             </div>
         
@@ -160,7 +167,7 @@ notes.addEventListener('click',function () {
     const iconClose=document.querySelector('.fa-rectangle-xmark');
     iconClose.addEventListener('click',function(){
         /* Apelle de la fonction Confirmation */
-     creerModalConfirm("Voulez vous vraiment quitter le modalNote!",containerModalNotes,"");    
+     creerModalConfirm("Voulez vous vraiment quitter le modalNote!",containerModalNotes);    
     })
     /* ########Ajouter du text lorsqu'on click sur 
         le boutton ajouter du formulaire ####### */
@@ -179,28 +186,37 @@ notes.addEventListener('click',function () {
         var hD=Date.parse(`${date} ${hDebut}`)
         var hF=Date.parse(`${date} ${hFin}`)
         var now=Date.parse(new Date())
+        // console.log(hF);
+        var vtextarea=document.getElementById('val-note')
+        var vdate=document.getElementById('val-date')
+        var vhDebut=document.getElementById('val-hDebut')
+        var vhFin=document.getElementById('val-hFin')
 
         // console.log(valtextarea,date,hDebut,hFin);
-        // tabInput=[valtextarea,date,hDebut,hFin]
-
+        checRequired([vtextarea,vdate,vhDebut,vhFin])
         chekValue(valtextarea,span1);
         chekValue(date,span2);
         chekValue(hDebut,span3);
         chekValue(hFin,span4);
-            // e.preventDefault();
+        dateD_F(hD,hF)
+            e.preventDefault();
         if (hF<hD || hD < now){
             e.preventDefault
         }else{
             const contenuModal=document.querySelector('.contenu-modal');
             contenuModal.appendChild(creationCarte(valtextarea,date,hDebut,hFin));
-            // On quitte le modal quand on click sur Ajouter
+            // On quitte le modal quand on click sur Ajouter:::::::::::::::::::::
             containerModalNotes.className="close-modalConfirm";
         }
         
-        
-        // console.log(hD,hF,now);
     })
 
+})
+const demarrer=document.getElementById('demarrer');
+const iconDemarrer=document.querySelector('.icon-demarrer');
+demarrer.addEventListener('click',()=>{
+    barreHaute.classList.toggle('open-menu');
+    iconDemarrer.classList.toggle("open-icon-demarrer");
 })
 
 body.append(barreHaute,containerModal,icon,containerModalNotes);
