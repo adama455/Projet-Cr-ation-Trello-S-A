@@ -1,5 +1,4 @@
 const body = document.getElementsByTagName('body')[0];
-
 const barreHaute=document.createElement('div');
 barreHaute.className='barre-haute';
     const colonne=document.createElement('div');
@@ -55,13 +54,10 @@ barreHaute.className='barre-haute';
             const ListeTache=document.querySelector('.listes-taches');
             ListeTache.classList.toggle("show-listes-taches");
         })
-
-
-    barreHaute.append(AutoSave,liste,colonneNotes,presCorbeille,corbeille);
-    
+    barreHaute.append(AutoSave,liste,colonneNotes,presCorbeille,corbeille); 
     const containerModal=document.querySelector('.modal-container');
-  let nbreCols=1;
-  colonne.addEventListener('click',function(){
+    let nbreCols=1;
+    colonne.addEventListener('click',function(){
     if (nbreCols<=5){ 
          // containerModal.className='modal-container';
          colonne.classList.add('click-colonne')
@@ -113,110 +109,97 @@ barreHaute.className='barre-haute';
 /*****************************************************************************************
     *******########## CREATION DU MODAL NOTE L'ORSQU'ON CLICK SUR NOTE ##########*****
 ******************************************************************************************/
-const containerModalNotes=document.createElement('div');
-notes.addEventListener('click',function(){
-       const modal=document.querySelector('.modal');
-        /* 
-        *******************************************
-            *******ON ouvre le Modal l'orsqu'on
-                a aumoins une Colonne******* 
-        *******************************************
-        */
-        if (modal) {
-                    
-                containerModalNotes.className="container-modal-note";
-                containerModalNotes.innerHTML=
-                `
-            <div class="modal-note">
-                <div class="taches">
-                    <h3> NOUVELLE TACHE</h3>
-                    <i class="fa-solid fa-rectangle-xmark"></i>
-                </div>
-                <div class="form modal">
-                    <h3>Remplir les informations de la nouvelle taches:</h3>
-                    <div class="form-control">
-                        <label for="">Tâches</label>
-                        <textarea name="valnote" id="val-note" class="input" value="" cols="30" rows="10" value=""></textarea>
-                        <small class="chp-textarea" >Le champs est vide</small>  
-                    </div>
-                    <div class="form-control">
-                        <label for="">Date</label>
-                        <input type="date" name="" class="input" value="" id="val-date">
-                        <small id="chp-date" >date invalide</small> 
-                    </div>
-                    <div class="form-control">
-                        <label for="">Heure de Début</label>
-                        <input type="time" name="" class="input" value="" id="val-hDebut">
-                        <small id="chp-hDebut" >heure de Debut invalide</small>  
-                    </div>
-                    <div class="form-control">
-                        <label for="">Heure de Fin</label>
-                        <input type="time" name="" class="input" value="" id="val-hFin">
-                        <small id="chp-hFin" >heure de Fin invalide</small>
-                    </div>
-                        <button class="btn" type="submit">Ajout</button>
-                    </div> 
-            </div>
-        
-            `;
-        }else{
-            notification("Il faut aumoins une Colonne avant ouvrire le Modal");
-        }
-
-    // Quitter le modal Notes lorsqu'on click sur Icon Close
-    const iconClose=document.querySelector('.fa-rectangle-xmark');
-    iconClose.addEventListener('click',function(){
-        /* Apelle de la fonction Confirmation */
+// const containerModalNotes=document.createElement('div');
+const containerModalNotes=document.querySelector('.container-modal-note');
+const contenuModal=document.querySelector('.contenu-modal');
+const form= document.getElementById("form");
+const boutonAdd=document.querySelector('.btn');
+const iconClose=document.querySelector('.fa-rectangle-xmark');
+/// Add Modal************************************************
+notes.onclick=()=>{
+    if (document.querySelectorAll('.modal').length!==1) {
+        containerModalNotes.classList.replace('container-modal-note','show-container-modal-note');
+    }else{
+        notification("Il faut aumoins une Colonne avant ouvrire le Modal");
+    }
+};
+iconClose.onclick=()=>{
+    /* Apelle de la fonction Confirmation */
      creerModalConfirm("Voulez vous vraiment quitter le modalNote!",containerModalNotes);    
-    })
-    /* ########Ajouter du text lorsqu'on click sur 
-        le boutton ajouter du formulaire ####### */
-
-    const boutonAdd=document.querySelector('.btn');
-    boutonAdd.addEventListener('click',function(e){
+}
+/// Add Taches -> Colonne
+boutonAdd.addEventListener('click',function(e){
     /******Recuperation des input du Modal******/
-        var valtextarea=document.getElementById('val-note').value;
-        var date=document.getElementById('val-date').value;
-        var hDebut=document.getElementById('val-hDebut').value;
-        var hFin=document.getElementById('val-hFin').value;
+    const valtextarea=document.getElementById('note').value;
+    const date = document.getElementById('date').value;
+    const heureDebut = document.getElementById('heure-debut').value;
+    const heureFin = document.getElementById('heure-fin').value;
         const span1=document.querySelector('.chp-textarea');
         const span2=document.getElementById('.chp-date');
         const span3=document.getElementById('.chp-hDebut');
         const span4=document.getElementById('.chp-hFin');
-        var hD=Date.parse(`${date} ${hDebut}`)
-        var hF=Date.parse(`${date} ${hFin}`)
+        var hD=Date.parse(`${date} ${heureDebut}`)
+        var hF=Date.parse(`${date} ${heureFin}`)
+        var dateAct=Date.parse(`${date}`)
         var now=Date.parse(new Date())
         // console.log(hF);
-        var vtextarea=document.getElementById('val-note')
-        var vdate=document.getElementById('val-date')
-        var vhDebut=document.getElementById('val-hDebut')
-        var vhFin=document.getElementById('val-hFin')
-
+        var vtextarea=document.getElementById('note')
+        var vdate=document.getElementById('date')
+        var vhDebut=document.getElementById('heure-debut')
+        var vhFin=document.getElementById('heure-fin')
         // console.log(valtextarea,date,hDebut,hFin);
         checRequired([vtextarea,vdate,vhDebut,vhFin])
         chekValue(valtextarea,span1);
         chekValue(date,span2);
-        chekValue(hDebut,span3);
-        chekValue(hFin,span4);
+        chekValue(heureDebut,span3);
+        chekValue(heureFin,span4);
         dateD_F(hD,hF)
             e.preventDefault();
+        if (hF<=hD || dateAct < now){
+            e.preventDefault
+        }else{
+            const contenuModal=document.querySelector('.contenu-modal');
+            contenuModal.appendChild(creationCarte(valtextarea,date,heureDebut,heureFin));
+            // On quitte le modal quand on click sur Ajouter:::::::::::::::::::::
+            containerModalNotes.classList.replace('show-container-modal-note','container-modal-note');
+        }   
+    })
+/* boutonAdd.addEventListener('click',function(e){
+        const span1=document.getElementById('chp-textarea');
+        const span2=document.getElementById('chp-date');
+        const span3=document.getElementById('chp-hDebut');
+        const span4=document.getElementById('chp-hFin');
+        var hD=Date.parse(`${date} ${heureDebut}`)
+        var hF=Date.parse(`${date} ${heureFin}`)
+        var now=Date.parse(new Date())
+        console.log(hF);
+        const vtextarea=document.querySelector('.champ1')
+        const vdate=document.querySelector('.champ2')
+        const vhDebut=document.querySelector('.champ3')
+        const vhFin=document.querySelector('.champ4')
+        checRequired([vtextarea,vdate,vhDebut,vhFin])
+
+        chekValue(valtextarea,span1);
+        chekValue(date,span2);
+        chekValue(heureDebut,span3);
+        chekValue(heureFin,span4);
+        dateD_F(hD,hF)
+        e.preventDefault();
         if (hF<hD || hD < now){
             e.preventDefault
         }else{
             const contenuModal=document.querySelector('.contenu-modal');
-            contenuModal.appendChild(creationCarte(valtextarea,date,hDebut,hFin));
+            console.log(valtextarea,date,heureDebut,heureFin);
+            contenuModal.appendChild(creationCarte(valtextarea,date,heureDebut,heureFin));
             // On quitte le modal quand on click sur Ajouter:::::::::::::::::::::
             containerModalNotes.className="close-modalConfirm";
         }
         
-    })
-
-})
+    }) */
 const demarrer=document.getElementById('demarrer');
 const iconDemarrer=document.querySelector('.icon-demarrer');
 demarrer.addEventListener('click',()=>{
     barreHaute.classList.toggle('open-menu');
     iconDemarrer.classList.toggle("open-icon-demarrer");
 })
-
-body.append(barreHaute,containerModal,icon,containerModalNotes);
+body.append(barreHaute,containerModal,icon);

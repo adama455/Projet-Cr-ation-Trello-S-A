@@ -196,6 +196,8 @@ body::after{
 ************************************************ */
 .partie-corbeille{
     display: flex;
+    flex-direction: column;
+   align-items: center;
     position: absolute;
     top: 11%;
     right: 2%;
@@ -209,6 +211,19 @@ body::after{
     z-index: 2;
     opacity: 0.7;
     transform: translateX(110%);
+}
+.partie-corbeille h3{
+    text-align: center;
+    width: 100%;
+    height: 5%;
+    font-size: 1.5em;
+}
+.partie-corbeille .liste-corbeille{
+    width: 100%;
+    height: 95%;
+    padding: 2%;
+    overflow-y: auto;
+
 }
 .showCorbeille{
     transform: translateX(0);
@@ -244,12 +259,8 @@ body::after{
     border-radius: 50%;
     right: 2%;
 }
-    .partie-corbeille .liste-corbeille{
-        width: 100%;
-        padding: 2%;
-        overflow-y: auto;
 
-    }
+
 .liste-corbeille .carte .bx-chevron-left{
     display: none;
 }
@@ -283,7 +294,7 @@ body::after{
     width: 18%;
     margin: 0.5% 1%;
     position: relative;
-    opacity: 0.5;
+    /* opacity: 0.5; */
 
 }
 .titre-modal{
@@ -293,15 +304,14 @@ body::after{
     /* border: 3px solid rgb(68, 80, 2); */
     height: 6%;
     margin-bottom: 1%;
-    padding: 0 3%;
-    
+    padding: 0 3%;  
 }
 .titre-modal .input-titre-modal{
     padding:3% 0 ;
     width: 100%;
     text-align: center;
-    font-weight: 600;
-/* font-size: 0.8em; */
+    font-weight: 900;
+    font-size: 1.5em;
     background-color: transparent;
     border: none;
     cursor: pointer;
@@ -358,7 +368,7 @@ body::after{
     border-radius: 10px;
     width: 100%;
     font-weight: 700;
-    height: 20%;
+    height: 8%;
     margin: 9% 0;
     margin-bottom: 4%;
     align-items: center;
@@ -367,6 +377,7 @@ body::after{
 .carte .textarea-carte{
     display: flex;
     align-content: center;
+    justify-content: center;
     width:100% ;
     padding: 0 5%;
     background-color: transparent;
@@ -379,16 +390,19 @@ body::after{
     font-size: 1.2em;
 }
 .div-detail{
-    display: flex;
     align-items: center;
     flex: 1;
     width:100% ;
-    visibility: hidden;
+    box-sizing: border-box;
+    display: none;
 }
 .show-detail{
-    visibility: visible;
+    display: flex;
     background-color: white;
     height: 100%;
+}
+.etal-carte{
+    height: 18%;
 }
 .date{
     display: flex;
@@ -456,13 +470,23 @@ body::after{
 }
 .container-modal-note{
     background-color: rgba(0, 0, 0, 0.5) ;
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
     z-index: 1;
-    /* display: none; */
+    display: none;
+}
+.show-container-modal-note{
+    background-color: rgba(0, 0, 0, 0.5) ;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    display: block;
 }
 
 
@@ -478,7 +502,8 @@ body::after{
     left: 50%;
     transform: translate(-50%,-50%);
     position: absolute;
-    animation: modalOpen 2s 
+    animation: modalOpen 2s;
+    z-index: 2;
 }
 
 /* *********************************************************
@@ -598,10 +623,13 @@ body::after{
 }
 .form-control small{
     color: red;
-    visibility: hidden;
+    display: none;
 }
-.form-control.error small{
+/* .show-mess{
     visibility: visible;
+} */
+.form-control.error small{
+    display: block;
 }
 .modal-note .form-control input{
     padding: 10px 2px;
