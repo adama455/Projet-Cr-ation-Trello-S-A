@@ -3,9 +3,7 @@
 *{
     box-sizing: border-box;
 }
-:root{
 
-}
 .demarrer{
     position: absolute;
     top: 1%;
@@ -87,7 +85,7 @@
 }
 body{
     margin: 0;
-    background-image: url('bg.jpeg');
+    background-image: url('img.jpg');
     background-size: cover;
     font-family: 'Poppins',sans-serif;
     height: 100vh;
@@ -488,8 +486,6 @@ body::after{
     z-index: 1;
     display: block;
 }
-
-
 .modal-note {
     background-color: aliceblue;
     display: flex;
