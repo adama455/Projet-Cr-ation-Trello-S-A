@@ -90,8 +90,8 @@ function creationCarte(textarea,input1,input2,input3) {
         // Insertion des valeur de l'input;
         textareaCarte.innerText=textarea;
         divDate.innerHTML='<div>Date:</div>'+input1;
-        divHDebut.innerHTML='<div>Heure-debut:</div>'+input2;
-        divHFin.innerHTML= '<div>Heure-Fin:</div> '+input3;
+        divHDebut.innerHTML='<div>Début:</div>'+input2;
+        divHFin.innerHTML= '<div>Fin:</div> '+input3;
         // Deplacement taches
         DeplacementTaches(iconRowD,iconRowG) 
         carte.append(iconRowG,iconRowD,textareaCarte,divDetail,divIconSupp);

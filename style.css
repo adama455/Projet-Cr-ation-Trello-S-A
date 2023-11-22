@@ -366,30 +366,26 @@ body::after{
     border-radius: 10px;
     width: 100%;
     font-weight: 700;
-    height: 8%;
+    height: 10%;
     margin: 9% 0;
     margin-bottom: 4%;
     align-items: center;
     position: relative; 
 }
 .carte .textarea-carte{
-    display: flex;
-    align-content: center;
-    justify-content: center;
     width:100% ;
     padding: 0 5%;
     background-color: transparent;
     border: none;
-    flex: 1;
     font-size: 1em;
+    height: 70%;
     border-radius: 5px;
     max-width: 100%; 
     min-width: 100%;
     font-size: 1.2em;
 }
 .div-detail{
-    align-items: center;
-    flex: 1;
+    height: 30%;
     width:100% ;
     box-sizing: border-box;
     display: none;
@@ -397,7 +393,7 @@ body::after{
 .show-detail{
     display: flex;
     background-color: white;
-    height: 100%;
+    height: 70%;
 }
 .etal-carte{
     height: 18%;
